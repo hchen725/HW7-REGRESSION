@@ -1,3 +1,4 @@
+![BuildStatus](https://github.com/hchen725/HW7-REGRESSION/actions/workflows/test.yml/badge.svg?)
 # HW 7: logistic regression
 
 In this assignment, you'll implement a classifier using logistic regression, optimized with gradient descent.
@@ -18,7 +19,7 @@ You will find the full dataset in `data/nsclc.csv`. Class labels are encoded in 
 
 ## Tasks + Grading
 
-* [TODO] Complete the logistic regression implementation. (5 points)
+* [x] Complete the logistic regression implementation. (5 points)
   * complete the `make_prediction` method
   * complete the `loss_function` method
   * complete the `calculate_gradient` method

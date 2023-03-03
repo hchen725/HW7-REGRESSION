@@ -32,7 +32,7 @@ class BaseRegressor():
     
     def train_model(self, X_train, y_train, X_val, y_val):
 
-        # Padding data with vector of ones for bias term
+        # Padding data with vector of ones for bias termf
         X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
         X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
     
@@ -129,7 +129,16 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             The predicted labels (y_pred) for given X.
         """
-        pass
+        # Need to add an error term since W = num_feats + 1?
+        # add a column of 1s to X, but only on the first iteration
+        # Appears to have been done in the parent class, but a just in case here too.
+        if X.shape[1] == self.num_feats:
+            X_new = np.concatenate((X, np.ones((X.shape[0], 1))), 1)
+        # Compute dot product of X with W
+        y_hat = X.dot(self.W)
+        # Compute prediction
+        y_pred = 1/(1 + np.exp(-y_hat))
+        return(y_pred)
     
     def loss_function(self, y_true, y_pred) -> float:
         """
@@ -143,7 +152,15 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             The mean loss (a single number).
         """
-        pass
+        # Caclulate binary cross entropy loss
+        # y_true = true labels
+        # y_pred = predictions calculated from make_predictions
+        # Get number of observations for bce loss
+        num_obs = y_true.shape[0]
+        # Calculate loss
+        bce_loss = (-1/num_obs) * np.sum((y_true * np.log(y_pred)) + ((1 - y_true) * np.log(1 - y_pred)))
+        return(bce_loss)
+
         
     def calculate_gradient(self, y_true, X) -> np.ndarray:
         """
@@ -157,4 +174,8 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             Vector of gradients.
         """
-        pass
+        # Caclulate predicted values and error between prediction and true value
+        error = y_true - self.make_prediction(X)
+        # Caclualte gradient
+        gradient = X.T.dot(error)
+        return(gradient)
