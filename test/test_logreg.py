@@ -65,14 +65,17 @@ def test_gradient():
 	assert np.all(gradient == np.array([-1.5, -1.0, -.5]))   
 
 def test_training():
-	""" Test training of model
+	""" Test training of model and make sure that weights are being updated
 	"""
 	np.random.seed(42)
 
 	X_train, X_test, y_train, y_test = utils.loadDataset(split_percent=0.8)
 	sc = StandardScaler()
 	X_train = sc.fit_transform(X_train)
-	X_test = sc.transform (X_test)
+	X_test = sc.transform(X_test)
 
+	lr = logreg.LogisticRegressor(num_feats = 6) 
+	lr.train_model(X_train, y_train, X_test, y_test)
 
+	assert (len(lr.loss_hist_train) == len(lr.loss_hist_val))
 	pass
