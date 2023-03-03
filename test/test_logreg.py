@@ -68,7 +68,6 @@ def test_training():
 	""" Test training of model and make sure that weights are being updated
 	"""
 	np.random.seed(42)
-
 	X_train, X_test, y_train, y_test = utils.loadDataset(split_percent=0.8)
 	sc = StandardScaler()
 	X_train = sc.fit_transform(X_train)
